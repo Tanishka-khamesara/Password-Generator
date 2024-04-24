@@ -35,9 +35,23 @@ function Main() {
 
 
 
-    },[length,uppercase,lowercase,number])
+    }, [length, uppercase, lowercase, number])
+    function onTextCopy() {
+        if (Password) {
+
+            navigator.clipboard.writeText(Password)
+                .then(() => {
+                    alert("Password copied to clipboard!");
+                })
+                .catch((error) => {
+                    console.error("Unable to copy password: ", error);
+                });
+        } else {
+            alert("No password generated yet!");
+        }
+    }
     return (
-        <div>
+        <div className='container'>
             <h1>Password Generator</h1>
             <div class="output">{Password}</div>
             <div style={{display:"flex", justifyContent:"space-between" }}>
@@ -57,7 +71,10 @@ function Main() {
                 <input type="checkBox" value="special" id="special" name="special" checked={special} onClick={(e)=>{setSpecial(e.target.checked)}}/>
                 <label for="special">Include symbols</label><br></br>
             </div>
-            <button onClick={generatePassword}>Generate Password</button>
+            <div>
+                <button onClick={generatePassword} className='btn'>Generate Password</button>
+                <button onClick={onTextCopy} className='btn'>Copy Password</button>
+           </div>
         </div>
     )
 }
